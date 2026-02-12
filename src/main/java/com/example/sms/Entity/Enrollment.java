@@ -1,9 +1,10 @@
 package com.example.sms.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="enroll")
+@Table(name="enroll")  //child class
 public class Enrollment {
 
     @Id
@@ -13,6 +14,7 @@ public class Enrollment {
 
     @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="Stud_id")
+    @JsonBackReference
    private Student student;
     @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "course_id")

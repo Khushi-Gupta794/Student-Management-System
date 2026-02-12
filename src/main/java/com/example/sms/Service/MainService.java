@@ -21,11 +21,6 @@ public class MainService {
     }
 
 
-
-
-
-
-
     public Department createDepart(Department dept){
         dept.setDepart_name(dept.getDepart_name());
        return  departRepo.save(dept);
@@ -38,6 +33,7 @@ public class MainService {
         return stuRepo.save(stud);
 
     }
+    
 
 
 }

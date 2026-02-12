@@ -1,10 +1,13 @@
 package com.example.sms.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.apache.logging.log4j.util.Lazy;
 
+import java.util.List;
+
 @Entity
-@Table(name = "student")
+@Table(name = "student")  //parent
 public class Student {
 
     @Id
@@ -67,5 +70,12 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "depart_id")
     private Department department;
+
+    //this is called as bidirectional mapping onetomany and in enrollment manytoone
+    //this can be solved by three methods --> DTO, jsonignore, jsonbackreference
+    @OneToMany(mappedBy = "student")
+    @JsonManagedReference
+    private List<Enrollment> enrollments;
+
 
 }
