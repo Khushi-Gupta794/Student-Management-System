@@ -2,6 +2,7 @@ package com.example.sms.Controller;
 
 import com.example.sms.Entity.*;
 import com.example.sms.Service.MainService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -125,4 +126,14 @@ public class MainController {
     public List<Enrollment> getAllEnrollments() {
         return service.getAllEnrollments();
     }
+
+    //pagination and sorting
+    @GetMapping("/students")
+    public Page<Student> getStudents(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return service.getStudents(page, size);
+    }
+
 }

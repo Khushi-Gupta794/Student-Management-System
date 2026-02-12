@@ -2,6 +2,12 @@ package com.example.sms.Service;
 
 import com.example.sms.Entity.*;
 import com.example.sms.Repository.*;
+import com.example.sms.StudentSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -129,4 +135,26 @@ public class MainService {
     public List<Enrollment> getAllEnrollments() {
         return enrollRepo.findAll();
     }
+
+    //pagination and sorting
+    public Page<Student> getStudents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("stud_name").ascending());
+        return stuRepo.findAll(pageable);
+    }
+
+    //specification
+    public List<Student> search(String name, Long deptId) {
+
+        Specification<Student> spec = Specification.where((Specification<Student>) null);
+
+        if(name != null)
+            spec = spec.and(StudentSpecification.hasName(name));
+
+        if(deptId != null)
+            spec = spec.and(StudentSpecification.hasDepartment(deptId));
+
+        return stuRepo.findAll(spec);
+    }
+
+
 }

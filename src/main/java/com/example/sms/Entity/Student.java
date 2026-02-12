@@ -14,7 +14,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Stud_id;
     private String stud_name;
+
+
     private  String email;
+
+    @Transient
+    private int age;
 
     public Department getDepartment() {
         return department;

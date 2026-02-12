@@ -10,6 +10,8 @@ public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private String grade;
 
     @ManyToOne(fetch = FetchType.LAZY)
