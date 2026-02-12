@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "student")  //parent
 public class Student {
-
+  //use column for names or else java tasks attribute name for column name by default
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Stud_id;
