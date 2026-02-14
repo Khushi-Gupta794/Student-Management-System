@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -29,9 +30,9 @@ public class MainController {
         return service.getAllDepartment();
     }
 
-    @GetMapping("/departments/{id}")
+    @GetMapping("/departments/{depart_id}")
     public Department getDepartment(@PathVariable Long depart_id) {
-        return (Department) service.getDepartById(depart_id);
+        return  service.getDepartById(depart_id);
     }
 
     @PutMapping("/departments/{id}")
@@ -61,7 +62,7 @@ public class MainController {
 
     @GetMapping("/students/{id}")
     public Student getStudent(@PathVariable Long id) {
-       return (Student) service.getStuById(id);
+       return  service.getStuById(id);
     }
 
     @PutMapping("/students/{id}")
@@ -128,12 +129,18 @@ public class MainController {
     }
 
     //pagination and sorting
-    @GetMapping("/students")
-    public Page<Student> getStudents(
+    @GetMapping("/teacher/paging")
+    public Page<Teacher> getTeachers(
             @RequestParam int page,
             @RequestParam int size) {
 
-        return service.getStudents(page, size);
+        return service.getTeachers(page, size);
+    }
+
+    //jpql
+    @GetMapping("/students/department/{id}")
+    public List<Student> getByDepartment(@PathVariable Long id) {
+        return service.getStudentsByDept(id);
     }
 
 }

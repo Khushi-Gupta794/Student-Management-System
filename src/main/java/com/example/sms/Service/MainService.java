@@ -1,8 +1,8 @@
 package com.example.sms.Service;
 
+import com.example.sms.ENUM.Grade;
 import com.example.sms.Entity.*;
 import com.example.sms.Repository.*;
-import com.example.sms.StudentSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MainService {
@@ -44,8 +45,8 @@ public class MainService {
         return departRepo.findAll();
     }
 
-    public List<Department> getDepartById(Long depart_id){
-        return Collections.singletonList(departRepo.findById(depart_id).orElseThrow(() -> new RuntimeException("Department not found")));
+    public Department getDepartById(Long depart_id){
+        return departRepo.findById(depart_id).orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
     public Department updateDepart(Long depart_id, Department newDept){
@@ -70,8 +71,8 @@ public class MainService {
         return stuRepo.findAll();
     }
 
-    public List<Student> getStuById(Long Stud_id){
-      return Collections.singletonList(stuRepo.findById(Stud_id).orElseThrow(() -> new RuntimeException("student not found")));
+    public Student getStuById(Long Stud_id) {
+        return stuRepo.findById(Stud_id).orElseThrow(() -> new RuntimeException("Student not found"));
     }// ide suggest singletonlist as now iam working on list not optional because orElseThrow only works with optional
 
     public Student updateStudent(Long id, Student newStud) {
@@ -127,7 +128,8 @@ public class MainService {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setCourses(course);
-        enrollment.setGrade(grade);
+        Grade gradeEnum = Grade.valueOf(grade.toUpperCase());
+        enrollment.setGrade(gradeEnum);
 
         return enrollRepo.save(enrollment);
     }
@@ -137,24 +139,17 @@ public class MainService {
     }
 
     //pagination and sorting
-    public Page<Student> getStudents(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("stud_name").ascending());
-        return stuRepo.findAll(pageable);
+    public Page<Teacher> getTeachers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("name").ascending());
+        return teacherRepo.findAll(pageable);
     }
 
-    //specification
-    public List<Student> search(String name, Long deptId) {
-
-        Specification<Student> spec = Specification.where((Specification<Student>) null);
-
-        if(name != null)
-            spec = spec.and(StudentSpecification.hasName(name));
-
-        if(deptId != null)
-            spec = spec.and(StudentSpecification.hasDepartment(deptId));
-
-        return stuRepo.findAll(spec);
+    //jpql
+    public List<Student> getStudentsByDept(Long deptId) {
+        return stuRepo.getStudentsByDepartment(deptId);
     }
+
+
 
 
 }

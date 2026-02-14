@@ -9,7 +9,7 @@ import java.util.TimeZone;
 public class SmsApplication {
 
 	public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+       TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(SmsApplication.class, args);
 	}
 

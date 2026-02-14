@@ -1,5 +1,7 @@
 package com.example.sms.Entity;
 
+import com.example.sms.ENUM.Grade;
+import com.example.sms.EnrollmentId;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -7,36 +9,39 @@ import jakarta.persistence.*;
 @Table(name="enroll")  //child class
 public class Enrollment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private EnrollmentId id;
+
+  //  @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+   // private Long id;
 
     @Enumerated(EnumType.STRING)
-    private String grade;
+    private Grade grade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="Stud_id")
-    @JsonBackReference
-   private Student student;
-    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "course_id")
-   private Courses courses;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("studentId")
+   @JoinColumn(name="Stud_id")
+    @JsonBackReference
+   private Student student;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("courseId")
+   @JoinColumn(name = "course_id")
+   private Courses courses;
+
+
+
+
 
     public Student getStudent() {
         return student;
