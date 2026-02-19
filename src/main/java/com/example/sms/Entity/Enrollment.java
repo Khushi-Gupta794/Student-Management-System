@@ -9,12 +9,12 @@ import jakarta.persistence.*;
 @Table(name="enroll")  //child class
 public class Enrollment {
 
-    @EmbeddedId
-    private EnrollmentId id;
+  //  @EmbeddedId
+    //private EnrollmentId id;
 
-  //  @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-   // private Long id;
+   @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
 
     @Enumerated(EnumType.STRING)
     private Grade grade;
@@ -27,15 +27,27 @@ public class Enrollment {
         this.grade = grade;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("studentId")
-   @JoinColumn(name="Stud_id")
-    @JsonBackReference
-   private Student student;
+    @Column(name = "student_id")
+    private Long studentId;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("courseId")
+   // @MapsId("courseId")
    @JoinColumn(name = "course_id")
    private Courses courses;
 
@@ -43,13 +55,7 @@ public class Enrollment {
 
 
 
-    public Student getStudent() {
-        return student;
-    }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 
     public Courses getCourses() {
         return courses;

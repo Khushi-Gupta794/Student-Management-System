@@ -1,7 +1,8 @@
 package com.example.sms.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Teacher")
 public class Teacher {
@@ -23,19 +24,18 @@ public class Teacher {
         return name;
     }
 
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name="depart_id")
-    private Department department;
+    //removing relationship part
+    private Long departmentId;
 }

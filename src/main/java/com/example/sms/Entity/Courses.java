@@ -1,7 +1,8 @@
 package com.example.sms.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Courses {
 
@@ -29,6 +30,8 @@ public class Courses {
     public Teacher getTeacher() {
         return teacher;
     }
+
+
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;

@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Student Management API
+  description: API for managing Teachers, Courses, and Enrollments
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8082/api
+
+paths:
+
+  /teachers:
+    post:
+      summary: Create Teacher
+      operationId: createTeacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          description: Teacher created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+
+    get:
+      summary: Get all teachers
+      operationId: getAllTeachers
+      responses:
+        '200':
+          description: List of teachers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+
+  /courses:
+    post:
+      summary: Create Course
+      operationId: createCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '200':
+          description: Course created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+
+  /enroll:
+    post:
+      summary: Enroll student
+      operationId: enrollStudent
+      parameters:
+        - name: studentId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: courseId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: grade
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Enrollment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enrollment'
+
+components:
+  schemas:
+
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        courseName:
+          type: string
+
+    Enrollment:
+      type: object
+      properties:
+        id:
+          type: integer
+        studentId:
+          type: integer
+        grade:
+          type: string
